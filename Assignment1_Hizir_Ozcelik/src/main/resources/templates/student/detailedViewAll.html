@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Registration</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div th:insert="~{fragments/navbar :: body}"></div>
+	<div class="container">
+      <h1>Student List</h1>
+      <a th:href="@{/student}"> List View</a>
+      <div th:each="st : ${studentList}">
+      <h3 >
+        <span th:text="${st.name}"></span>
+        <span th:text="${st.lastName}"></span>
+      </h3>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Course Name</th>
+            <th scope="col">Course Code</th>
+            <th scope="col">Professor Name</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="c:${st.courseList}">
+            <td th:text="${c.id}"></td>
+            <td th:text="${c.name}"></td>
+            <td th:text="${c.code}"></td>
+            <td th:text="${c.professor.name}"></td>
+            <td>
+              <a
+                class="btn btn-sm btn-danger"
+                th:href="@{/student/dropCourse/{id}/{courseId}((id=${st.id}), courseId=${c.id})}"
+                >Drop Course</a
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+
+		<br />
+      <div th:insert="~{fragments/links :: body}"></div>
+    </div>
+    &nbsp;&nbsp;
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+  <div class="container" th:insert="~{fragments/footer :: footer}"></div>
+</html>

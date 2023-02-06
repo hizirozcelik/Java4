@@ -1,0 +1,88 @@
+<html xmlns:th="http://www.thymeleaf.org">
+  <body>
+    <div th:fragment="fragments/navbar">
+      <nav class="navbar navbar-dark navbar-expand-md bg-dark">
+        <div class="container">
+          <a href="/" class="navbar-brand d-flex w-50 me-auto"
+            >Student Registration App</a
+          >
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapsingNavbar"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="navbar-collapse collapse w-100" id="collapsingNavbar">
+            <ul class="navbar-nav w-100 justify-content-center">
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="navbarDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Students
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" th:href="@{/student}">All Students</a></li>
+                  <li><a class="dropdown-item" th:href="@{/student/search}">Find a Student</a></li>
+				  <li><a class="dropdown-item" th:href="@{/student/add}">Add New Student</a></li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li>
+                    <a class="dropdown-item" th:href="@{/student/assign}">Assign a Course to a Student</a>
+                  </li>
+                </ul>
+              </li>
+			  <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="navbarDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Courses
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="course">All Courses</a></li>
+                  <li><a class="dropdown-item" href="course/search">Find a Course</a></li>
+				  <li><a class="dropdown-item" href="course/add">Add New Course</a></li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li>
+                    <a class="dropdown-item" href="course/assign">Assign a Course to a Student</a>
+                  </li>
+                </ul>
+              </li>
+			  <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="navbarDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Professors
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="professor">All Professors</a></li>
+                  <li><a class="dropdown-item" href="professor/search">Find a Professor</a></li>
+				  <li><a class="dropdown-item" href="professor/add">Add New Professor</a></li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li>
+                    <a class="dropdown-item" href="professor/assign">Assign a Professor to a Course</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </body>
+</html>

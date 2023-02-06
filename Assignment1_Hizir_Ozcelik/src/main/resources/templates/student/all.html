@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Registration</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+  </head>
+  <body>
+    <div th:insert="~{fragments/navbar :: body}"></div>
+
+      <div class="container" >
+      <h1>Student List</h1>
+      <a th:href="@{/student/detailedView}"> Detailed View</a>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#  <a data-bs-toggle="tooltip" data-bs-placement="right" title="Sort" th:href="@{/student/sortById}"><i class="bi bi-arrow-down-up"></i></a></th>
+            <th scope="col">Student Name  <a data-bs-toggle="tooltip" data-bs-placement="right" title="Sort" th:href="@{/student/sortByName}"><i class="bi bi-arrow-down-up"></i></a></th>
+            <th scope="col">Student Last Name  <a data-bs-toggle="tooltip" data-bs-placement="right" title="Sort" th:href="@{/student/sortByLastName}"><i class="bi bi-arrow-down-up"></a></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="st : ${studentList}">
+            <td th:text="${st.id}"></td>
+            <td th:text="${st.name}"></td>
+            <td th:text="${st.lastName}"></td>
+            <td>
+            	<a class="btn btn-sm btn-success" th:href="@{/student/details/{id}(id=${st.id})}">Details</a>
+              	<a class="btn btn-sm btn-secondary" th:href="@{/student/edit/{id}(id=${st.id})}">Edit</a>
+              	<a class="btn btn-sm btn-danger" th:href="@{/student/delete/{id}(id=${st.id})}">Delete</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+		<br />
+      <div th:insert="~{fragments/links :: body}"></div>
+    </div>
+    &nbsp;&nbsp;
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+    
+    <script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    	  return new bootstrap.Tooltip(tooltipTriggerEl)
+    	})
+    	</script>
+  </body>
+  <div class="container" th:insert="~{fragments/footer :: footer}"></div>
+</html>
