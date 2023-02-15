@@ -33,7 +33,7 @@ public class FakeData implements CommandLineRunner {
 		"Programming in Java", "Operating Systems", "Computer Networks", "Database Systems", 
 		"Web Development", "Artificial Intelligence", "Machine Learning", "Cryptography" };
 
-		String[] profName = { "John", "Mike", "Mary", "Jane", "Peter", "Paul" };
+		String[] profName = { "John Wick", "Mike Tyson", "Mary Kramer", "Jane Duke", "Peter Pan", "Paul Smith" };
 
 		String[] firstName = { "James", "John", "Robert", "Michael", "William", "David", "Richard", "Charles", "Joseph",
 				"Thomas", "Christopher", "Daniel", "Paul", "Mark", "Donald", "George", "Kenneth", "Steven", "Edward",
