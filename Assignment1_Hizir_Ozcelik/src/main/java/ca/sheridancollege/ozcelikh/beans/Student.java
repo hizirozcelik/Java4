@@ -25,6 +25,8 @@ public class Student {
 	private Long id;
 	private String name;
 	private String lastName;
+	private String email;
+	private String studentNumber;
 	
 
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "studentList")

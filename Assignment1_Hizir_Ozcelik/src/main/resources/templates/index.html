@@ -13,14 +13,175 @@
   </head>
   <body>
     <div th:insert="~{fragments/navbar :: body}"></div>
-    <div class="container">
-      <h1>Main Page</h1>
+    <!-- Background image -->
+    <div
+      class="bg-image"
+      style="background-image: url('/images/sheridan.webp')"
+    >
+      <div class="container">
+        <h1 class="text-warning">Search</h1>
+        <div class="row">
+          <h3 class="text-warning">Find - Student</h3>
+          <div class="col col-4">
+            <form th:action="@{/student/searchById}">
+              <div class="mb-3">
+                <label for="id" class="form-label text-warning"
+                  >Search by Id</label
+                >
+                <input type="text" class="form-control" name="id" required />
+              </div>
 
-      &nbsp;
-      
-      <div th:insert="~{fragments/links :: body}"></div>
+              <button type="submit" class="btn btn-warning">Search</button>
+            </form>
+            <br />
+          </div>
+          <div class="col col-4">
+            <form th:action="@{/student/searchByName}">
+              <div class="mb-3">
+                <label for="name" class="form-label text-warning"
+                  >Search by Name</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  name="name"
+                  placeholder="Type search string"
+                  required
+                />
+              </div>
 
+              <button type="submit" class="btn btn-warning">Search</button>
+            </form>
+            <br />
+          </div>
+          <div class="col col-4">
+            <form th:action="@{/student/searchByLastName}">
+              <div class="mb-3">
+                <label for="lastName" class="form-label text-warning"
+                  >Search by Last Name</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  name="lastName"
+                  placeholder="Type search string"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-warning">Search</button>
+            </form>
+            <br />
+          </div>
+        </div>
+        <hr class="text-warning" />
+        <div class="row">
+          <h3 class="text-warning">Find - Course</h3>
+          <div class="col col-4">
+            <form th:action="@{/course/searchById}">
+              <div class="mb-3">
+                <label for="id" class="form-label text-warning"
+                  >Search by Id</label
+                >
+                <input
+                  type="text"
+                  class="form-control text-warning"
+                  name="id"
+                  required
+                />
+              </div>
+
+              <button type="submit" class="btn btn-warning">Search</button>
+            </form>
+            <br />
+          </div>
+          <div class="col col-4">
+            <form th:action="@{/course/searchByName}">
+              <div class="mb-3">
+                <label for="name" class="form-label text-warning"
+                  >Search by Name</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  name="name"
+                  placeholder="Type search string"
+                  required
+                />
+              </div>
+
+              <button type="submit" class="btn btn-warning">Search</button>
+            </form>
+            <br />
+          </div>
+          <div class="col col-4">
+            <form th:action="@{/course/searchByCode}">
+              <div class="mb-3">
+                <label for="code" class="form-label text-warning"
+                  >Search by Code</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  name="code"
+                  placeholder="Type search string"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-warning">Search</button>
+            </form>
+            <br />
+          </div>
+          <hr class="text-warning" />
+        </div>
+        <div class="row">
+          <h3 class="text-warning">Find - Professor</h3>
+          <div class="col col-4">
+            <form th:action="@{/professor/searchById}">
+              <div class="mb-3">
+                <label for="id" class="form-label text-warning"
+                  >Search by Id</label
+                >
+                <input type="text" class="form-control" name="id" required />
+              </div>
+
+              <button type="submit" class="btn btn-warning">Search</button>
+            </form>
+            <br />
+          </div>
+          <div class="col col-4">
+            <form th:action="@{/professor/searchByName}">
+              <div class="mb-3">
+                <label for="name" class="form-label text-warning"
+                  >Search by Name</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  name="name"
+                  placeholder="Type partial string"
+                  required
+                />
+              </div>
+
+              <button type="submit" class="btn btn-warning">Search</button>
+            </form>
+            <br />
+          </div>
+          <hr class="text-warning" />
+        </div>
+
+        &nbsp;
+
+        <div>
+          <a th:href="@{/student}" class="link-warning me-3">All Students</a>
+          <a th:href="@{/course}" class="link-warning me-3">All Courses</a>
+          <a th:href="@{/professor}" class="link-warning me-3"
+            >All Professors</a
+          >
+        </div>
+      </div>
     </div>
+
     &nbsp;&nbsp;
 
     <script

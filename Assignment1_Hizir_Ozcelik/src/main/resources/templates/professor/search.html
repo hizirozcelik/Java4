@@ -32,9 +32,9 @@
       <h1>Search</h1>
       <div class="row">
         <div class="col col-4">
-          <form th:action="@{/student/searchById}">
+          <form th:action="@{/professor/searchById}">
             <div class="mb-3">
-              <label for="id" class="form-label">Search Student by Id</label>
+              <label for="id" class="form-label">Search Professor by Id</label>
               <input type="text" class="form-control" name="id" required />
             </div>
 
@@ -43,10 +43,10 @@
           <br />
         </div>
         <div class="col col-4">
-          <form th:action="@{/student/searchByName}">
+          <form th:action="@{/professor/searchByName}">
             <div class="mb-3">
               <label for="name" class="form-label"
-                >Search Student by Name</label
+                >Search Professor by Name</label
               >
               <input
                 type="text"
@@ -61,24 +61,6 @@
           </form>
           <br />
         </div>
-        <div class="col col-4">
-          <form th:action="@{/student/searchByLastName}">
-            <div class="mb-3">
-              <label for="lastName" class="form-label"
-                >Search Student by Lastname</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                name="lastName"
-                placeholder="Type partial string"
-                required
-              />
-            </div>
-            <button type="submit" class="btn btn-primary">Search</button>
-          </form>
-          <br />
-        </div>
         <hr />
       </div>
       <h2>Results</h2>
@@ -86,33 +68,27 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Student Name</th>
-            <th>Student Last Name</th>
-            <th>Student Email</th>
-            <th>Student Number</th>
+            <th>Professor Name</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr th:each="st : ${studentList}">
-            <td th:text="*{st.id}"></td>
-            <td th:text="*{st.name}"></td>
-            <td th:text="*{st.lastName}"></td>
-            <td th:text="*{st.email}"></td>
-            <td th:text="*{st.studentNumber}"></td>
+          <tr th:each="st : ${profList}">
+            <td th:text="${st.id}"></td>
+            <td th:text="${st.name}"></td>
             <td>
-              <a th:href="@{/student/details/{id}(id=${st.id})}">Details</a>
-              <a th:href="@{/student/edit/{id}(id=${st.id})}">Edit</a>
+              <a th:href="@{/professor/details/{id}(id=${st.id})}">Details</a>
+              <a th:href="@{/professor/edit/{id}(id=${st.id})}">Edit</a>
               <a
                 class="btn btn-sm btn-danger"
-                th:href="@{/student/delete/{id}(id=${st.id})}"
+                th:href="@{/professor/delete/{id}(id=${st.id})}"
                 >Delete</a
               >
             </td>
           </tr>
         </tbody>
       </table>
-      <div th:insert="~{fragments/links :: body}"></div>
+      <div th:insert="~{fragments/links_professor :: body}"></div>
     </div>
     &nbsp;&nbsp;
     <script

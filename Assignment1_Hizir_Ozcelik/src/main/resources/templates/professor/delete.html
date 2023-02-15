@@ -17,16 +17,21 @@
     <div class="container mt-3">
       <div class="alert alert-danger d-flex align-items-center" role="alert">
         <div>
-          WARNING!: All courses will be dropped and the student will be deleted!
+          WARNING!: All courses will be dropped and the professor will be
+          deleted!
         </div>
       </div>
-      <h1>Delete Student</h1>
-      <form method="post" th:action="@{/student/delete}" th:object="${student}">
+      <h1>Delete Professor</h1>
+      <form
+        method="post"
+        th:action="@{/professor/delete}"
+        th:object="${professor}"
+      >
         <input type="hidden" class="form-control" id="id" th:field="*{id}" />
         <div class="col col-4">
           <input type="hidden" th:field="*{id}" />
           <div class="mb-3">
-            <label for="name" class="form-label">First Name</label>
+            <label for="name" class="form-label">Professor Name</label>
             <input
               readonly
               type="text"
@@ -35,23 +40,13 @@
               th:field="*{name}"
             />
           </div>
-          <div class="mb-3">
-            <label for="lastName" class="form-label">Last Name</label>
-            <input
-              readonly
-              type="text"
-              class="form-control"
-              id="lastName"
-              th:field="*{lastName}"
-            />
-          </div>
         </div>
-        <button type="submit" class="btn btn-danger">Delete Student</button>
-        <a th:href="@{/student}" class="btn btn-primary">Cancel</a>
+        <button type="submit" class="btn btn-danger">Delete Professor</button>
+        <a th:href="@{/professor}" class="btn btn-primary">Cancel</a>
       </form>
       <br />
 
-      <div th:insert="~{fragments/links :: body}"></div>
+      <div th:insert="~{fragments/links_professor :: body}"></div>
     </div>
     &nbsp;&nbsp; &nbsp;
     <script

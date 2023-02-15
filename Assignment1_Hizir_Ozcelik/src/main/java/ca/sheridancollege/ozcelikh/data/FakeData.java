@@ -29,7 +29,9 @@ public class FakeData implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 
 		// sample data
-		String[] courseTitle = { "Java", "C#", "C++", "Python", "JavaScript", "HTML", "CSS", "PHP", "Ruby", "Swift" };
+		String[] courseTitle = { "Introduction to Computer Science", "Data Structures and Algorithms", 
+		"Programming in Java", "Operating Systems", "Computer Networks", "Database Systems", 
+		"Web Development", "Artificial Intelligence", "Machine Learning", "Cryptography" };
 
 		String[] profName = { "John", "Mike", "Mary", "Jane", "Peter", "Paul" };
 
@@ -44,8 +46,8 @@ public class FakeData implements CommandLineRunner {
 				"Hernandez",
 				"King" };
 
-		String[] courseCode = { "JAV101", "C#101", "C++101", "PYT101", "JAV101", "HTML101", "CSS101", "PHP101",
-				"RUB101", "SWF101" };
+		String[] courseCode = {"CSCI-101", "CSCI-205", "CSCI-310", "CSCI-400", "CSCI-415", "CSCI-450", "CSCI-480", "CSCI-510", "CSCI-520", "CSCI-540" };
+
 
 		// Initialize professors with empty course list
 		Professor prof1 = Professor.builder().name("Prof. " + profName[0]).courseList(new ArrayList<Course>()).build();
@@ -75,8 +77,13 @@ public class FakeData implements CommandLineRunner {
 
 
 
+		int num = 999;
 		for (int i = 0; i < 6; i++) {
+			
+			num++;
+			String stNumber = "99157" + num;
 			Student student = Student.builder().name(firstName[i]).lastName(lastName[i])
+					.email(firstName[i].toLowerCase() + lastName[i].toLowerCase() + "@sheridancollege.ca").studentNumber(stNumber)
 					.courseList(new ArrayList<Course>()).build();
 			studentRepo.save(student);
 
@@ -88,7 +95,11 @@ public class FakeData implements CommandLineRunner {
 
 		}
 		for(int i = 6; i < 12; i++) {
+			num++;
+
+			String stNumber = "99157" + num;
 			Student student = Student.builder().name(firstName[i]).lastName(lastName[i])
+					.email(firstName[i].toLowerCase() + lastName[i].toLowerCase() + "@sheridancollege.ca").studentNumber(stNumber)
 					.courseList(new ArrayList<Course>()).build();
 			studentRepo.save(student);
 
@@ -101,7 +112,10 @@ public class FakeData implements CommandLineRunner {
 		}
 		
 		for(int i = 12; i < 18; i++) {
+			num++;
+			String stNumber = "99157" + num;
 			Student student = Student.builder().name(firstName[i]).lastName(lastName[i])
+					.email(firstName[i].toLowerCase() + lastName[i].toLowerCase() + "@sheridancollege.ca").studentNumber(stNumber)
 					.courseList(new ArrayList<Course>()).build();
 			studentRepo.save(student);
 
@@ -113,7 +127,10 @@ public class FakeData implements CommandLineRunner {
 		}
 		
 		for(int i = 18; i < 24; i++) {
+			num++;
+			String stNumber = "99157" + num;
 			Student student = Student.builder().name(firstName[i]).lastName(lastName[i])
+					.email(firstName[i].toLowerCase() + lastName[i].toLowerCase() + "@sheridancollege.ca").studentNumber(stNumber)
 					.courseList(new ArrayList<Course>()).build();
 			studentRepo.save(student);
 
@@ -125,7 +142,10 @@ public class FakeData implements CommandLineRunner {
 		}
 		
 		for(int i = 24; i < 30; i++) {
+			num++;
+			String stNumber = "99157" + num;
 			Student student = Student.builder().name(firstName[i]).lastName(lastName[i])
+					.email(firstName[i].toLowerCase() + lastName[i].toLowerCase() + "@sheridancollege.ca").studentNumber(stNumber)
 					.courseList(new ArrayList<Course>()).build();
 			studentRepo.save(student);
 

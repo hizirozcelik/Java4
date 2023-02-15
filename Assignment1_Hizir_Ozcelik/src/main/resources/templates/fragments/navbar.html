@@ -3,7 +3,7 @@
     <div th:fragment="fragments/navbar">
       <nav class="navbar navbar-dark navbar-expand-md bg-dark">
         <div class="container">
-          <a href="/" class="navbar-brand d-flex w-50 me-auto"
+          <a href="/" class="navbar-brand text-warning d-flex w-50 me-auto"
             >Student Registration App</a
           >
           <button
@@ -18,7 +18,7 @@
             <ul class="navbar-nav w-100 justify-content-center">
               <li class="nav-item dropdown">
                 <a
-                  class="nav-link dropdown-toggle"
+                  class="nav-link dropdown-toggle text-warning"
                   href="#"
                   id="navbarDropdown"
                   role="button"
@@ -28,18 +28,32 @@
                   Students
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" th:href="@{/student}">All Students</a></li>
-                  <li><a class="dropdown-item" th:href="@{/student/search}">Find a Student</a></li>
-				  <li><a class="dropdown-item" th:href="@{/student/add}">Add New Student</a></li>
+                  <li>
+                    <a class="dropdown-item" th:href="@{/student}"
+                      >All Students</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" th:href="@{/student/search}"
+                      >Find a Student</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" th:href="@{/student/add}"
+                      >Add New Student</a
+                    >
+                  </li>
                   <li><hr class="dropdown-divider" /></li>
                   <li>
-                    <a class="dropdown-item" th:href="@{/student/assign}">Assign a Course to a Student</a>
+                    <a class="dropdown-item" th:href="@{/student/assign}"
+                      >Assign a Student to a Course</a
+                    >
                   </li>
                 </ul>
               </li>
-			  <li class="nav-item dropdown">
+              <li class="nav-item dropdown">
                 <a
-                  class="nav-link dropdown-toggle"
+                  class="nav-link dropdown-toggle text-warning"
                   href="#"
                   id="navbarDropdown"
                   role="button"
@@ -49,18 +63,35 @@
                   Courses
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="course">All Courses</a></li>
-                  <li><a class="dropdown-item" href="course/search">Find a Course</a></li>
-				  <li><a class="dropdown-item" href="course/add">Add New Course</a></li>
+                  <li>
+                    <a class="dropdown-item" href="/course">All Courses</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/course/search"
+                      >Find a Course</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/course/add"
+                      >Add New Course</a
+                    >
+                  </li>
                   <li><hr class="dropdown-divider" /></li>
                   <li>
-                    <a class="dropdown-item" href="course/assign">Assign a Course to a Student</a>
+                    <a class="dropdown-item" href="/student/assign"
+                      >Assign a Student to a Course</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/professor/assign"
+                      >Assign a Professor to a Course</a
+                    >
                   </li>
                 </ul>
               </li>
-			  <li class="nav-item dropdown">
+              <li class="nav-item dropdown">
                 <a
-                  class="nav-link dropdown-toggle"
+                  class="nav-link dropdown-toggle text-warning"
                   href="#"
                   id="navbarDropdown"
                   role="button"
@@ -70,12 +101,26 @@
                   Professors
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="professor">All Professors</a></li>
-                  <li><a class="dropdown-item" href="professor/search">Find a Professor</a></li>
-				  <li><a class="dropdown-item" href="professor/add">Add New Professor</a></li>
+                  <li>
+                    <a class="dropdown-item" href="/professor"
+                      >All Professors</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/professor/search"
+                      >Find a Professor</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/professor/add"
+                      >Add New Professor</a
+                    >
+                  </li>
                   <li><hr class="dropdown-divider" /></li>
                   <li>
-                    <a class="dropdown-item" href="professor/assign">Assign a Professor to a Course</a>
+                    <a class="dropdown-item" href="/professor/assign"
+                      >Assign a Professor to a Course</a
+                    >
                   </li>
                 </ul>
               </li>

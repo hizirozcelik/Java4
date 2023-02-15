@@ -10,7 +10,6 @@
       integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
       crossorigin="anonymous"
     />
-    <!--  <link href="/css/bootstrap.min.css" rel="stylesheet" /> -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"
@@ -32,16 +31,24 @@
         <div class="toast-body bg-danger text-light" th:text="${error}"></div>
       </div>
     </div>
+    <script>
+      var toast = document.querySelector(".toast");
+      if (toast) {
+        setTimeout(function () {
+          toast.remove();
+        }, 2000);
+      }
+    </script>
 
     <div class="container mt-3">
-      <h1>Student List</h1>
-      <a th:href="@{/student/detailedView}"> Detailed View</a>
-      <div th:if="${studentList.isEmpty()}" class="m-3">
+      <h1>Course List</h1>
+      <a th:href="@{/course/detailedView}"> Detailed View</a>
+      <div th:if="${courseList.isEmpty}" class="m-3">
         <span class="text-danger"
-          ><strong>There is no Student found.</strong></span
+          ><strong>There is no course found.</strong></span
         >
       </div>
-      <div th:if="${!studentList.isEmpty()}">
+      <div th:if="${!courseList.isEmpty}" th:each="st : ${courseList}">
         <table class="table table-striped">
           <thead>
             <tr>
@@ -51,7 +58,7 @@
                   data-bs-toggle="tooltip"
                   data-bs-placement="top"
                   title="Sort"
-                  th:href="@{/student/sortById}"
+                  th:href="@{/course/sortById}"
                 >
                   <i class="bi bi-sort-numeric-down"></i
                 ></a>
@@ -59,18 +66,18 @@
                   data-bs-toggle="tooltip"
                   data-bs-placement="top"
                   title="Sort"
-                  th:href="@{/student/sortByIdDesc}"
+                  th:href="@{/course/sortByIdDesc}"
                 >
                   <i class="bi bi-sort-numeric-down-alt"></i
                 ></a>
               </th>
               <th scope="col">
-                Student Name
+                Course Name
                 <a
                   data-bs-toggle="tooltip"
                   data-bs-placement="right"
                   title="Sort"
-                  th:href="@{/student/sortByName}"
+                  th:href="@{/course/sortByName}"
                 >
                   <i class="bi bi-sort-alpha-down"></i
                 ></a>
@@ -78,18 +85,18 @@
                   data-bs-toggle="tooltip"
                   data-bs-placement="right"
                   title="Sort"
-                  th:href="@{/student/sortByNameDesc}"
+                  th:href="@{/course/sortByNameDesc}"
                 >
                   <i class="bi bi-sort-alpha-down-alt"></i
                 ></a>
               </th>
               <th scope="col">
-                Student Last Name
+                Course Code
                 <a
                   data-bs-toggle="tooltip"
                   data-bs-placement="right"
                   title="Sort"
-                  th:href="@{/student/sortByLastName}"
+                  th:href="@{/course/sortByCode}"
                 >
                   <i class="bi bi-sort-alpha-down"></i
                 ></a>
@@ -97,29 +104,31 @@
                   data-bs-toggle="tooltip"
                   data-bs-placement="right"
                   title="Sort"
-                  th:href="@{/student/sortByLastNameDesc}"
+                  th:href="@{/course/sortByCodeDesc}"
                 >
                   <i class="bi bi-sort-alpha-down-alt"></i
                 ></a>
               </th>
-              <th>Student Email</th>
-              <th>Student Number</th>
+              <th>Professor Name</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            <tr th:each="st : ${studentList}">
+            <tr th:each="st : ${courseList}">
               <td th:text="${st.id}"></td>
               <td th:text="${st.name}"></td>
-              <td th:text="${st.lastName}"></td>
-              <td th:text="${st.email}"></td>
-              <td th:text="${st.studentNumber}"></td>
+              <td th:text="${st.code}"></td>
+              <td
+                th:if="${st.professor != null}"
+                th:text="${st.professor.name}"
+              ></td>
+              <td th:if="${st.professor == null}">Not Assigned</td>
               <td>
-                <a th:href="@{/student/details/{id}(id=${st.id})}">Details</a>
-                <a th:href="@{/student/edit/{id}(id=${st.id})}">Edit</a>
+                <a th:href="@{/course/details/{id}(id=${st.id})}">Details</a>
+                <a th:href="@{/course/edit/{id}(id=${st.id})}">Edit</a>
                 <a
                   class="btn btn-sm btn-danger"
-                  th:href="@{/student/delete/{id}(id=${st.id})}"
+                  th:href="@{/course/delete/{id}(id=${st.id})}"
                   >Delete</a
                 >
               </td>
@@ -129,7 +138,7 @@
       </div>
 
       <br />
-      <div th:insert="~{fragments/links :: body}"></div>
+      <div th:insert="~{fragments/links_course :: body}"></div>
     </div>
     &nbsp;&nbsp;
 
@@ -138,14 +147,8 @@
       integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
       crossorigin="anonymous"
     ></script>
-    <script>
-      var toast = document.querySelector(".toast");
-      if (toast) {
-        setTimeout(function () {
-          toast.remove();
-        }, 2000);
-      }
 
+    <script>
       var tooltipTriggerList = [].slice.call(
         document.querySelectorAll('[data-bs-toggle="tooltip"]')
       );

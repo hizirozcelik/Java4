@@ -39,7 +39,7 @@ public class Course {
 
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "Course_Professor",
-        joinColumns = @JoinColumn(name = "Professor_ID"),
-        inverseJoinColumns = @JoinColumn(name = "Course_ID"))
+        joinColumns = @JoinColumn(name = "Course_ID"),
+        inverseJoinColumns = @JoinColumn(name = "Professor_ID"))
 	private Professor professor;
 }

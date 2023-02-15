@@ -40,14 +40,18 @@
     </script>
 
     <div class="container mt-3">
-      <h1>Add Student</h1>
+      <h1>Add Professor</h1>
 
-      <form method="post" th:action="@{/student/add}" th:object="${student}">
+      <form
+        method="post"
+        th:action="@{/professor/add}"
+        th:object="${professor}"
+      >
         <input type="hidden" class="form-control" id="id" th:field="*{id}" />
         <div class="col col-4">
           <input type="hidden" th:field="*{id}" />
           <div class="mb-3">
-            <label for="name" class="form-label">First Name</label>
+            <label for="name" class="form-label">Professor Name</label>
             <input
               type="text"
               class="form-control"
@@ -55,41 +59,14 @@
               th:field="*{name}"
             />
           </div>
-          <div class="mb-3">
-            <label for="lastName" class="form-label">Last Name</label>
-            <input
-              type="text"
-              class="form-control"
-              id="lastName"
-              th:field="*{lastName}"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="email" class="form-label">Student Email</label>
-            <input
-              type="email"
-              class="form-control"
-              id="email"
-              th:field="*{email}"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="stNum" class="form-label">Student Number</label>
-            <input
-              type="text"
-              class="form-control"
-              id="stNum"
-              th:field="*{studentNumber}"
-            />
-          </div>
         </div>
-        <button type="submit" class="btn btn-success">Add Student</button>
-        <a th:href="@{/student/add}" class="btn btn-primary">Cancel</a>
+        <button type="submit" class="btn btn-success">Add Professor</button>
+        <a th:href="@{/professor/add}" class="btn btn-primary">Cancel</a>
       </form>
 
       <br />
 
-      <div th:insert="~{fragments/links :: body}"></div>
+      <div th:insert="~{fragments/links_professor :: body}"></div>
     </div>
     &nbsp;&nbsp;
 

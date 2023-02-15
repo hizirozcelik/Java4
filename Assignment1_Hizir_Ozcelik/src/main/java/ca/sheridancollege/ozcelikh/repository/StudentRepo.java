@@ -9,15 +9,21 @@ import ca.sheridancollege.ozcelikh.beans.Student;
 
 public interface StudentRepo extends JpaRepository<Student, Long>{
 
-	List<Student> findByNameIgnoreCase(String name);
+	List<Student> findByNameLikeIgnoreCase(String name);
 
-	List<Student> findByLastNameIgnoreCase(String lastName);
+	List<Student> findByLastNameLikeIgnoreCase(String lastName);
 
     List<Student> findAllByOrderByIdAsc();
 
     List<Student> findAllByOrderByNameAsc();
 
     List<Student> findAllByOrderByLastNameAsc();
+
+    List<Student> findAllByOrderByIdDesc();
+
+	List<Student> findAllByOrderByNameDesc();
+
+	List<Student> findAllByOrderByLastNameDesc();
 
 
 

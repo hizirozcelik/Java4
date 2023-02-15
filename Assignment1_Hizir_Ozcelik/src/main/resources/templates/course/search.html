@@ -19,22 +19,14 @@
         <div class="toast-body bg-danger text-light" th:text="${error}"></div>
       </div>
     </div>
-    <script>
-      var toast = document.querySelector(".toast");
-      if (toast) {
-        setTimeout(function () {
-          toast.remove();
-        }, 2000);
-      }
-    </script>
 
     <div class="container mt-3">
       <h1>Search</h1>
       <div class="row">
         <div class="col col-4">
-          <form th:action="@{/student/searchById}">
+          <form th:action="@{/course/searchById}">
             <div class="mb-3">
-              <label for="id" class="form-label">Search Student by Id</label>
+              <label for="id" class="form-label">Search Course by Id</label>
               <input type="text" class="form-control" name="id" required />
             </div>
 
@@ -43,16 +35,14 @@
           <br />
         </div>
         <div class="col col-4">
-          <form th:action="@{/student/searchByName}">
+          <form th:action="@{/course/searchByName}">
             <div class="mb-3">
-              <label for="name" class="form-label"
-                >Search Student by Name</label
-              >
+              <label for="name" class="form-label">Search Course by Name</label>
               <input
                 type="text"
                 class="form-control"
                 name="name"
-                placeholder="Type partial string"
+                placeholder="Type search string"
                 required
               />
             </div>
@@ -62,16 +52,14 @@
           <br />
         </div>
         <div class="col col-4">
-          <form th:action="@{/student/searchByLastName}">
+          <form th:action="@{/course/searchByCode}">
             <div class="mb-3">
-              <label for="lastName" class="form-label"
-                >Search Student by Lastname</label
-              >
+              <label for="code" class="form-label">Search Course by Code</label>
               <input
                 type="text"
                 class="form-control"
-                name="lastName"
-                placeholder="Type partial string"
+                name="code"
+                placeholder="Type search string"
                 required
               />
             </div>
@@ -86,33 +74,32 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Student Name</th>
-            <th>Student Last Name</th>
-            <th>Student Email</th>
-            <th>Student Number</th>
+            <th>Course Name</th>
+            <th>Course Code</th>
+            <!-- <th>Professor Name</th> -->
             <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr th:each="st : ${studentList}">
-            <td th:text="*{st.id}"></td>
-            <td th:text="*{st.name}"></td>
-            <td th:text="*{st.lastName}"></td>
-            <td th:text="*{st.email}"></td>
-            <td th:text="*{st.studentNumber}"></td>
+          <tr th:each="st : ${courseList}">
+            <td th:text="${st.id}"></td>
+            <td th:text="${st.name}"></td>
+            <td th:text="${st.code}"></td>
+            <!-- <td th:if="${st.professor != null}" th:text="${st.professor.name}"></td>
+            <td th:if="${st.professor == null}" > Not Assigned</td> -->
             <td>
-              <a th:href="@{/student/details/{id}(id=${st.id})}">Details</a>
-              <a th:href="@{/student/edit/{id}(id=${st.id})}">Edit</a>
+              <a th:href="@{/course/details/{id}(id=${st.id})}">Details</a>
+              <a th:href="@{/course/edit/{id}(id=${st.id})}">Edit</a>
               <a
                 class="btn btn-sm btn-danger"
-                th:href="@{/student/delete/{id}(id=${st.id})}"
+                th:href="@{/course/delete/{id}(id=${st.id})}"
                 >Delete</a
               >
             </td>
           </tr>
         </tbody>
       </table>
-      <div th:insert="~{fragments/links :: body}"></div>
+      <div th:insert="~{fragments/links_course :: body}"></div>
     </div>
     &nbsp;&nbsp;
     <script
@@ -120,6 +107,14 @@
       integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
       crossorigin="anonymous"
     ></script>
+    <script>
+      var toast = document.querySelector(".toast");
+      if (toast) {
+        setTimeout(function () {
+          toast.remove();
+        }, 2000);
+      }
+    </script>
   </body>
   <div class="container" th:insert="~{fragments/footer :: footer}"></div>
 </html>

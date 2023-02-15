@@ -15,50 +15,59 @@
     <div th:insert="~{fragments/navbar :: body}"></div>
 
     <div class="container mt-3">
-      <h1>Student List</h1>
-      <a th:href="@{/student}"> List View</a>
-      <div th:if="${studentList.isEmpty()}" class="m-3">
-        <span class="test-danger"
-          ><strong>There is no Student found.</strong></span
+      <h1>Course List</h1>
+      <a th:href="@{/course}"> List View</a>
+      <div th:if="${courseList.isEmpty}" class="m-3">
+        <span class="text-danger"
+          ><strong>There is no course found.</strong></span
         >
       </div>
-      <div th:if="${!studentList.isEmpty()}" th:each="st : ${studentList}">
+      <div th:if="${!courseList.isEmpty}" th:each="st : ${courseList}">
         <h3>
           <span th:text="${st.name}"></span>
-          <span th:text="${st.lastName}"></span> -
-          <span class="fs-5" th:text="${st.studentNumber}"></span>
+          <span th:text="${st.code}"></span> -
+          <span
+            class="fs-5"
+            th:if="${st.professor != null}"
+            th:text="${st.professor.name}"
+          ></span>
+          <span class="fs-5" th:if="${st.professor == null}"
+            >No Professor assigned
+            <a th:href="@{/professor/assign}" class="btn btn-sm btn-secondary"
+              >Assign now!</a
+            ></span
+          >
         </h3>
-        <div th:if="${st.courseList.isEmpty}" class="m-3">
+        <div th:if="${st.studentList.isEmpty}" class="m-3">
           <span class="text-danger"
-            ><strong>There is no course found.</strong></span
+            ><strong>There is no student found.</strong></span
           >
         </div>
-        <div th:if="${!st.courseList.isEmpty}">
+        <div th:if="${!st.studentList.isEmpty}">
           <table class="table table-striped">
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Course Name</th>
-                <th scope="col">Course Code</th>
-                <th scope="col">Professor Name</th>
+                <th scope="col">Student Name</th>
+                <th scope="col">Student Last Name</th>
+                <th scope="col">Student Email</th>
+                <th scope="col">Student Number</th>
+
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              <tr th:each="c:${st.courseList}">
+              <tr th:each="c:${st.studentList}">
                 <td th:text="${c.id}"></td>
                 <td th:text="${c.name}"></td>
-                <td th:text="${c.code}"></td>
-                <td
-                  th:if="${c.professor != null}"
-                  th:text="${c.professor.name}"
-                ></td>
-                <td th:if="${c.professor == null}">Not Assigned</td>
+                <td th:text="${c.lastName}"></td>
+                <td th:text="${c.email}"></td>
+                <td th:text="${c.studentNumber}"></td>
                 <td>
                   <a
                     class="btn btn-sm btn-warning"
-                    th:href="@{/student/dropCourse/{id}/{courseId}((id=${st.id}), courseId=${c.id})}"
-                    >Drop Course</a
+                    th:href="@{/course/dropStudent/{id}/{studentId}((id=${st.id}), studentId=${c.id})}"
+                    >Drop Student</a
                   >
                 </td>
               </tr>
@@ -68,7 +77,7 @@
       </div>
 
       <br />
-      <div th:insert="~{fragments/links :: body}"></div>
+      <div th:insert="~{fragments/links_course :: body}"></div>
     </div>
     &nbsp;&nbsp;
 

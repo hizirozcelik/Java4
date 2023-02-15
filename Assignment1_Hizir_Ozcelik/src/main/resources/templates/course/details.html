@@ -14,38 +14,48 @@
   <body>
     <div th:insert="~{fragments/navbar :: body}"></div>
 
-    <div class="container mt-3" th:object="${student}">
-      <h1 class="p-3">
-        <span th:text="${student.name}"></span>
-        <span th:text="${student.lastName}"></span>
-      </h1>
-      <div th:if="${student.courseList.isEmpty}" class="m-3">
+    <div class="container mt-3" th:object="${course}">
+      <h2 class="mt-3">
+        <span th:text="*{name}"></span> -
+        <span class="fs-3" th:text="*{code}"></span> -
+        <span
+          class="fs-3"
+          th:if="${course.professor != null}"
+          th:text="*{professor.name}"
+        ></span>
+        <span class="fs-3" th:if="${course.professor == null}"
+          >Not Assigned</span
+        >
+      </h2>
+      <div th:if="${course.studentList.isEmpty}" class="m-3">
         <span class="text-danger"
-          ><strong>There is no course found.</strong></span
+          ><strong>There is no student found.</strong></span
         >
       </div>
-      <div th:if="${!student.courseList.isEmpty}">
+      <div th:if="${!course.studentList.isEmpty}">
         <table class="table table-striped">
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Course Name</th>
-              <th scope="col">Course Code</th>
-              <th scope="col">Professor Name</th>
+              <th scope="col">Student Name</th>
+              <th scope="col">Student Last Name</th>
+              <th scope="col">Student Email</th>
+              <th scope="col">Student Number</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            <tr th:each="c:${student.courseList}">
+            <tr th:each="c:${course.studentList}">
               <td th:text="${c.id}"></td>
               <td th:text="${c.name}"></td>
-              <td th:text="${c.code}"></td>
-              <td th:text="${c.professor.name}"></td>
+              <td th:text="${c.lastName}"></td>
+              <td th:text="${c.email}"></td>
+              <td th:text="${c.studentNumber}"></td>
               <td>
                 <a
                   class="btn btn-sm btn-warning"
-                  th:href="@{/student/dropCourse/{id}/{courseId}((id=${student.id}), courseId=${c.id})}"
-                  >Drop Course</a
+                  th:href="@{/course/dropStudent/{id}/{studentId}((id=${course.id}), studentId=${c.id})}"
+                  >Drop Student</a
                 >
               </td>
             </tr>
@@ -53,38 +63,36 @@
         </table>
       </div>
       <br />
-      <h2>Available Courses</h2>
-      <div th:if="${courseList.isEmpty}" class="m-3">
+      <h2>Available Students for the Course</h2>
+      <div th:if="${studentList.isEmpty}" class="m-3">
         <span class="text-danger"
-          ><strong>There is no course found.</strong></span
+          ><strong>There is no student found.</strong></span
         >
       </div>
-      <div th:if="${!courseList.isEmpty}">
+      <div th:if="${!studentList.isEmpty}">
         <table class="table table-striped">
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Course Name</th>
-              <th scope="col">Course Code</th>
-              <th scope="col">Professor Name</th>
+              <th scope="col">Student Name</th>
+              <th scope="col">Student Last Name</th>
+              <th scope="col">Student Email</th>
+              <th scope="col">Student Number</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            <tr th:each="c:${courseList}">
+            <tr th:each="c:${studentList}">
               <td th:text="${c.id}"></td>
               <td th:text="${c.name}"></td>
-              <td th:text="${c.code}"></td>
-              <td
-                th:if="${c.professor != null}"
-                th:text="${c.professor.name}"
-              ></td>
-              <td th:if="${c.professor == null}">Not Assigned</td>
+              <td th:text="${c.lastName}"></td>
+              <td th:text="${c.email}"></td>
+              <td th:text="${c.studentNumber}"></td>
               <td>
                 <a
                   class="btn btn-sm btn-secondary"
-                  th:href="@{/student/addCourse/{id}/{courseId}((id=${student.id}), courseId=${c.id})}"
-                  >Add Course</a
+                  th:href="@{/course/addStudent/{id}/{studentId}((id=${course.id}), studentId=${c.id})}"
+                  >Add Student</a
                 >
               </td>
             </tr>
@@ -92,7 +100,7 @@
         </table>
       </div>
 
-      <div th:insert="~{fragments/links :: body}"></div>
+      <div th:insert="~{fragments/links_course :: body}"></div>
     </div>
     &nbsp;&nbsp;
     <script
