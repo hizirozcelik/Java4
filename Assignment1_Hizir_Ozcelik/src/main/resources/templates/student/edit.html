@@ -25,7 +25,7 @@
               type="text"
               class="form-control"
               id="name"
-              th:field="${student.name}"
+              th:field="${student.name}" required
             />
           </div>
           <div class="mb-3">
@@ -34,7 +34,7 @@
               type="text"
               class="form-control"
               id="lastName"
-              th:field="${student.lastName}"
+              th:field="${student.lastName}" required
             />
           </div>
           <div class="mb-3">
@@ -43,7 +43,7 @@
               type="email"
               class="form-control"
               id="email"
-              th:field="*{email}"
+              th:field="*{email}" required
             />
           </div>
           <div class="mb-3">
@@ -52,7 +52,7 @@
               type="text"
               class="form-control"
               id="stNum"
-              th:field="*{studentNumber}"
+              th:field="*{studentNumber}" required
             />
           </div>
         </div>

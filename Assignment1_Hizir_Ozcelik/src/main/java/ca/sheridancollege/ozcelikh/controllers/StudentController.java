@@ -1,7 +1,7 @@
 package ca.sheridancollege.ozcelikh.controllers;
 /*
  * Author: Hizir Ozcelik
- * Date: 2023-02-24
+ * Date: 2023-02-15
  * Description: Student Controller
  * This controller is responsible for handling the requests from the student page.
  * It is responsible for adding, deleting, and updating students.
@@ -98,9 +98,16 @@ public class StudentController {
 	@PostMapping("/edit")
 	public ModelAndView processEdit(@ModelAttribute Student student, RedirectAttributes attr) {
 
-		studentRepo.save(student);
-		attr.addFlashAttribute("message", "Student updated successfully!");
-		return new ModelAndView("redirect:/student");
+		try {
+			studentRepo.save(student);
+			attr.addFlashAttribute("message", "Student updated successfully!");
+			return new ModelAndView("redirect:/student");
+		} catch (Exception e) {
+
+			attr.addFlashAttribute("message", "Student couldn't be updated!");
+			return new ModelAndView("redirect:/student");
+
+		}
 
 	}
 
@@ -123,19 +130,26 @@ public class StudentController {
 			attr.addFlashAttribute("error", "Student cannot be found!");
 			return new ModelAndView("redirect:/student");
 		}
-		// get all courses from database
-		List<Course> courseListDB = courseRepo.findAll();
+		try {
+			// get all courses from database
+			List<Course> courseListDB = courseRepo.findAll();
 
-		// drop student from all courses
-		for (Course course : courseListDB) {
-			course.getStudentList().removeIf(e -> e.getId().equals(student.getId()));
-			courseRepo.save(course);
+			// drop student from all courses
+			for (Course course : courseListDB) {
+				course.getStudentList().removeIf(e -> e.getId().equals(student.getId()));
+				courseRepo.save(course);
+			}
+
+			studentRepo.delete(student);
+
+			attr.addFlashAttribute("message", "Student deleted!");
+			return new ModelAndView("redirect:/student");
+		} catch (Exception e) {
+
+			attr.addFlashAttribute("message", "Student couldn't be deleted!");
+			return new ModelAndView("redirect:/student");
+
 		}
-
-		studentRepo.delete(student);
-
-		attr.addFlashAttribute("message", "Student deleted!");
-		return new ModelAndView("redirect:/student");
 	}
 
 	// Navigate a details with studentById
@@ -222,9 +236,9 @@ public class StudentController {
 
 		// set course name as code + name + professor name
 		for (Course course : courseList) {
-			if(course.getProfessor() == null) {
+			if (course.getProfessor() == null) {
 				course.setName(course.getCode() + " " + course.getName() + " - no professor");
-			} else{
+			} else {
 				course.setName(course.getCode() + " " + course.getName() + " - " + course.getProfessor().getName());
 			}
 		}
@@ -297,7 +311,7 @@ public class StudentController {
 	@GetMapping("/searchByName")
 	public ModelAndView searchByName(@RequestParam String name, RedirectAttributes attr) {
 
-		List<Student> studentList = studentRepo.findByNameLikeIgnoreCase("%"+name+"%");
+		List<Student> studentList = studentRepo.findByNameLikeIgnoreCase("%" + name + "%");
 		if (!studentList.isEmpty()) {
 			attr.addFlashAttribute("studentList", studentList);
 			return new ModelAndView("redirect:/student/search");
@@ -311,7 +325,7 @@ public class StudentController {
 	@GetMapping("/searchByLastName")
 	public ModelAndView searchByLastName(@RequestParam String lastName, RedirectAttributes attr) {
 
-		List<Student> studentList = studentRepo.findByLastNameLikeIgnoreCase("%"+lastName+"%");
+		List<Student> studentList = studentRepo.findByLastNameLikeIgnoreCase("%" + lastName + "%");
 		if (!studentList.isEmpty()) {
 			attr.addFlashAttribute("studentList", studentList);
 			return new ModelAndView("redirect:/student/search");

@@ -1,5 +1,11 @@
 package ca.sheridancollege.ozcelikh.controllers;
 
+/*
+ * Author: Ozcelik Hizir
+ * Date: 2023-02-15
+ * Description: This is a controller class for Course entity
+ * 
+ */
 import java.util.List;
 import java.util.Optional;
 
@@ -13,23 +19,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import ca.sheridancollege.ozcelikh.beans.Course;
-import ca.sheridancollege.ozcelikh.beans.Professor;
 import ca.sheridancollege.ozcelikh.beans.Student;
 import ca.sheridancollege.ozcelikh.repository.CourseRepo;
-import ca.sheridancollege.ozcelikh.repository.ProfessorRepo;
 import ca.sheridancollege.ozcelikh.repository.StudentRepo;
-import ca.sheridancollege.ozcelikh.viewmodels.StudentAssignView;
 
 @Controller
 @RequestMapping("/course")
 public class CourseController {
 	private StudentRepo studentRepo;
 	private CourseRepo courseRepo;
-	private ProfessorRepo profRepo;
 
-	public CourseController(StudentRepo studentRepo, CourseRepo courseRepo, ProfessorRepo profRepo) {
+	public CourseController(StudentRepo studentRepo, CourseRepo courseRepo) {
 		this.studentRepo = studentRepo;
 		this.courseRepo = courseRepo;
 	}
@@ -91,10 +92,16 @@ public class CourseController {
 	// Processing edit
 	@PostMapping("/edit")
 	public ModelAndView processEdit(@ModelAttribute Course course, RedirectAttributes attr) {
+		try {
+			courseRepo.save(course);
+			attr.addFlashAttribute("message", "Course updated successfully!");
+			return new ModelAndView("redirect:/course");
 
-		courseRepo.save(course);
-		attr.addFlashAttribute("message", "Course updated successfully!");
-		return new ModelAndView("redirect:/course");
+		} catch (Exception e) {
+
+			attr.addFlashAttribute("error", "Course could not be added!");
+			return new ModelAndView("redirect:/course");
+		}
 
 	}
 
@@ -117,19 +124,27 @@ public class CourseController {
 			attr.addFlashAttribute("error", "Course cannot be found!");
 			return new ModelAndView("redirect:/course");
 		}
-		// get all students from database
-		List<Student> studentListDB = studentRepo.findAll();
 
-		// drop student from all courses
-		for (Student student : studentListDB) {
-			student.getCourseList().removeIf(e -> e.getId().equals(course.getId()));
-			studentRepo.save(student);
+		try {
+			// get all students from database
+			List<Student> studentListDB = studentRepo.findAll();
+
+			// drop student from all courses
+			for (Student student : studentListDB) {
+				student.getCourseList().removeIf(e -> e.getId().equals(course.getId()));
+				studentRepo.save(student);
+			}
+
+			courseRepo.delete(course);
+
+			attr.addFlashAttribute("message", "Course deleted!");
+			return new ModelAndView("redirect:/course");
+
+		} catch (Exception e) {
+
+			attr.addFlashAttribute("error", "Course could not be deleted!");
+			return new ModelAndView("redirect:/course");
 		}
-
-		courseRepo.delete(course);
-
-		attr.addFlashAttribute("message", "Course deleted!");
-		return new ModelAndView("redirect:/course");
 	}
 
 	// Navigate a details with courseById
@@ -159,14 +174,12 @@ public class CourseController {
 		Optional<Course> course = courseRepo.findById(id);
 
 		if (student.isPresent() && course.isPresent()) {
-			
+
 			course.get().getStudentList().removeIf(e -> e.getId().equals(studentId));
 			courseRepo.save(course.get());
 
 			student.get().getCourseList().removeIf(e -> e.getId().equals(id));
 			studentRepo.save(student.get());
-
-
 
 			model.addAttribute("course", course);
 			model.addAttribute("studentList", course.get().getStudentList());
@@ -187,13 +200,11 @@ public class CourseController {
 
 		if (student.isPresent() && course.isPresent()) {
 
-
 			course.get().getStudentList().add(student.get());
 			courseRepo.save(course.get());
 
 			student.get().getCourseList().add(course.get());
 			studentRepo.save(student.get());
-
 
 			model.addAttribute("course", course);
 			model.addAttribute("studentList", course.get().getStudentList());
@@ -203,7 +214,7 @@ public class CourseController {
 			return "error.html";
 		}
 
-	}	
+	}
 
 	// Navigate to my search page
 	@GetMapping("/search")
@@ -218,12 +229,10 @@ public class CourseController {
 	public ModelAndView search(@RequestParam Long id, RedirectAttributes attr) {
 
 		Optional<Course> courseList = courseRepo.findById(id);
-		
-		
-		if (!courseList.isEmpty()) {
-		List<Course> courses = courseRepo.findAll();
 
-			attr.addFlashAttribute("courseList", courses);			
+		if (!courseList.isEmpty()) {
+
+			attr.addFlashAttribute("courseList", courseList.get());
 			return new ModelAndView("redirect:/course/search");
 		} else {
 			attr.addFlashAttribute("error", "Course cannot be found on database!");
@@ -258,7 +267,8 @@ public class CourseController {
 			return new ModelAndView("redirect:/course/search");
 		}
 	}
-	//sort by id 
+
+	// sort by id
 	@GetMapping("/sortById")
 	public String sortById(Model model) {
 

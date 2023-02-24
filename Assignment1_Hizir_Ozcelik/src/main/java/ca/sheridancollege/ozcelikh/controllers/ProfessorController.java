@@ -1,4 +1,10 @@
 package ca.sheridancollege.ozcelikh.controllers;
+/*
+ * Author: Ozcelik Hizir
+ * Date: 2023-02-15
+ * Description: This is a controller class for Professor entity
+ * 
+ */
 
 import java.util.Optional;
 import java.util.ArrayList;
@@ -18,7 +24,6 @@ import ca.sheridancollege.ozcelikh.beans.Course;
 import ca.sheridancollege.ozcelikh.beans.Professor;
 import ca.sheridancollege.ozcelikh.repository.CourseRepo;
 import ca.sheridancollege.ozcelikh.repository.ProfessorRepo;
-import ca.sheridancollege.ozcelikh.repository.StudentRepo;
 import ca.sheridancollege.ozcelikh.viewmodels.ProfAssignView;
 import ca.sheridancollege.ozcelikh.viewmodels.ProfDetailsView;
 
@@ -26,16 +31,14 @@ import ca.sheridancollege.ozcelikh.viewmodels.ProfDetailsView;
 @RequestMapping("/professor")
 public class ProfessorController {
 
-	private StudentRepo studentRepo;
 	private CourseRepo courseRepo;
 	private ProfessorRepo profRepo;
 
-	public ProfessorController(StudentRepo studentRepo, CourseRepo courseRepo, ProfessorRepo profRepo) {
-		this.studentRepo = studentRepo;
+	public ProfessorController(CourseRepo courseRepo, ProfessorRepo profRepo) {
 		this.courseRepo = courseRepo;
 		this.profRepo = profRepo;
 	}
-	
+
 	// Navigate to my all students page
 	@GetMapping(value = { "/", "" })
 	public String index(Model model) {
@@ -48,12 +51,12 @@ public class ProfessorController {
 	// Navigate to detailed view
 	@GetMapping("/detailedView")
 	public String detailedView(Model model) {
-		
+
 		ProfDetailsView profDetailsView = new ProfDetailsView();
 		List<ProfDetailsView> profDetailsViewList = new ArrayList<ProfDetailsView>();
 
 		List<Professor> profList = profRepo.findAll();
-		
+
 		for (Professor professor : profList) {
 			profDetailsView = new ProfDetailsView();
 			profDetailsView.setProfessor(professor);
@@ -107,9 +110,15 @@ public class ProfessorController {
 	@PostMapping("/edit")
 	public ModelAndView processEdit(@ModelAttribute Professor professor, RedirectAttributes attr) {
 
-		profRepo.save(professor);
-		attr.addFlashAttribute("message", "Professor updated successfully!");
-		return new ModelAndView("redirect:/professor");
+		try {
+			profRepo.save(professor);
+			attr.addFlashAttribute("message", "Professor updated successfully!");
+			return new ModelAndView("redirect:/professor");
+		} catch (Exception e) {
+
+			attr.addFlashAttribute("message", "Professor cannot be updated!");
+			return new ModelAndView("redirect:/professor");
+		}
 
 	}
 
@@ -132,28 +141,32 @@ public class ProfessorController {
 			attr.addFlashAttribute("error", "Professor cannot be found!");
 			return new ModelAndView("redirect:/professor");
 		}
-		// get all courses from database
-		List<Course> courseListDB = courseRepo.findAll();
+		try {
+			// get all courses from database
+			List<Course> courseListDB = courseRepo.findAll();
 
-		// drop prof from all courses
-		for (Course course : courseListDB) {
-			if (course.getProfessor() != null){
-				if (course.getProfessor().getId() == professor.getId())
-					course.setProfessor(null);
+			// drop prof from all courses
+			for (Course course : courseListDB) {
+				if (course.getProfessor() != null) {
+					if (course.getProfessor().getId() == professor.getId())
+						course.setProfessor(null);
 					courseRepo.save(course);
-			} else
-				continue;
+				} else
+					continue;
+			}
+
+			profRepo.delete(professor);
+
+			attr.addFlashAttribute("message", "Professor deleted!");
+			return new ModelAndView("redirect:/professor");
+		} catch (Exception e) {
+
+			attr.addFlashAttribute("message", "Professor couldn't be deleted!");
+			return new ModelAndView("redirect:/professor");
 		}
-
-		profRepo.delete(professor);
-
-		attr.addFlashAttribute("message", "Professor deleted!");
-		return new ModelAndView("redirect:/professor");
 	}
 
-	
-
-	// Navigate a details 
+	// Navigate a details
 	@GetMapping("/details/{id}")
 	public String details(Model model, @PathVariable Long id) {
 
@@ -183,8 +196,8 @@ public class ProfessorController {
 		model.addAttribute("professor", professor.get());
 		model.addAttribute("courseList", courseListRegistered);
 
-			return "professor/details.html";
-		} 
+		return "professor/details.html";
+	}
 
 	// Drop course from Professor
 	@GetMapping("/dropCourse/{id}/{courseId}")
@@ -218,8 +231,6 @@ public class ProfessorController {
 		} else
 			return "error.html";
 	}
-		
-
 
 	// Add course to professor
 	@GetMapping("/addCourse/{id}/{courseId}")
@@ -263,7 +274,7 @@ public class ProfessorController {
 		listViewModel.setCourseList(avilableCourseList);
 
 		model.addAttribute("listViewModel", listViewModel);
-		if(avilableCourseList.isEmpty())
+		if (avilableCourseList.isEmpty())
 			model.addAttribute("alertMessage", "No course available to assign!");
 
 		return "professor/assign.html";
@@ -329,7 +340,7 @@ public class ProfessorController {
 	@GetMapping("/searchByName")
 	public ModelAndView searchByName(@RequestParam String name, RedirectAttributes attr) {
 
-		List<Professor> profList = profRepo.findByNameLikeIgnoreCase("%"+name+"%");
+		List<Professor> profList = profRepo.findByNameLikeIgnoreCase("%" + name + "%");
 		if (!profList.isEmpty()) {
 			attr.addFlashAttribute("profList", profList);
 			return new ModelAndView("redirect:/professor/search");
@@ -364,5 +375,5 @@ public class ProfessorController {
 		model.addAttribute("profList", profRepo.findAllByOrderByNameDesc());
 		return "/professor/all.html";
 	}
-	
+
 }
